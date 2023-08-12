@@ -1,12 +1,17 @@
 """
-BLOB - card game of prediction
+BLOB - the card game of prediction
 Command Line Interface Card Game
 """
 
-print("WELCOME TO BLOB")
+print("WELCOME TO BLOB - THE CARD GAME OF PREDICTION")
 
 # import dependencies
 import numpy as np
+import time
+
+pause = 2 # second to pause between steps
+
+time.sleep(pause)
 
 # player parameters
 num_players = 2
@@ -40,13 +45,27 @@ def get_card_string(card_tuple):
     values_map = {0:"2", 1:"3", 2:"4", 3:"5", 4:"6", 5:"7", 6:"8", 7:"9", 8:"10", 9:"J", 10:"Q", 11:"K", 12:"A"}
     return values_map[card_tuple[1]]+suit_map[card_tuple[0]]
 
+
+for player_id in range(num_players):
+            print(f"Player {player_id+1}'s cards: ", end="")
+            for card_id in range(len(hands[player_id])):
+                print(f"{get_card_string(hands[player_id][card_id])} ", end="")
+            print() # jumps to a new line for the next player
+
+# TODO: ask players how many pots they think they'll win
+
 for num_pot in range(num_pots_in_round):
 
-    for player_id in range(num_players):
-        print(f"Player {player_id+1}'s cards: ", end="")
-        for card_id in range(len(hands[player_id])):
-            print(f"{get_card_string(hands[player_id][card_id])} ", end="")
-        print() # jumps to a new line for the next player
+    print()
+    print(f"There are {num_pots_in_round - num_pot} points left to win")
+    
+    # we skip for the first loop as they already know what cards they have
+    if num_pot != 0:
+        for player_id in range(num_players):
+            print(f"Player {player_id+1}'s cards: ", end="")
+            for card_id in range(len(hands[player_id])):
+                print(f"{get_card_string(hands[player_id][card_id])} ", end="")
+            print() # jumps to a new line for the next player
 
     # create an empty list for players to add their cards to the plot
     pot = []
@@ -78,7 +97,7 @@ for num_pot in range(num_pots_in_round):
         # check for non-integer values
         try:
             selection_id = int(selection_id) - 1  # account for 0 indexing with the -1
-        except:
+        except ValueError:
             selection_id = np.random.randint(len(hands[player_id]))
             print("Invalid number entered, a random choice has been made instead")
 
@@ -106,7 +125,8 @@ for num_pot in range(num_pots_in_round):
     for card_id in range(len(pot)):
             print(f"{get_card_string(pot[card_id])} ", end="")
     print() # provides a new line
-    
-    # determine which player won and add that to their score
 
+    time.sleep(pause)
     
+    # TODO: determine which player won and add that to their score
+    # TODO: add a turn order list
