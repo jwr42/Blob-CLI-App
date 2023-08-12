@@ -9,17 +9,20 @@ print("WELCOME TO BLOB - THE CARD GAME OF PREDICTION\n")
 import numpy as np
 import time
 
-pause = 2 # second to pause between steps
+pause = 2 # time to pause between steps in seconds
 
 time.sleep(pause)
 
 # player parameters
 num_players = 2
-num_pots_in_round = 10
+num_pots_in_round = 3
 
 # check if this is a valid combo
 if num_players * num_pots_in_round > 52:
     NameError("Not enough cards in the deck!")
+
+# establish the initial turn order
+turn_order = [_ for _ in range(num_players)]
 
 # cards are stored as tuples, first element represents suit and second element represents value
 deck = [(suit, value) for suit in range(4) for value in range(13)]
@@ -46,7 +49,7 @@ def get_card_string(card_tuple):
     return values_map[card_tuple[1]]+suit_map[card_tuple[0]]
 
 
-for player_id in range(num_players):
+for player_id in turn_order:
             print(f"Player {player_id+1}'s cards: ", end="")
             for card_id in range(len(hands[player_id])):
                 print(f"{get_card_string(hands[player_id][card_id])} ", end="")
@@ -61,7 +64,7 @@ for num_pot in range(num_pots_in_round):
     
     # we skip for the first loop as they already know what cards they have
     if num_pot != 0:
-        for player_id in range(num_players):
+        for player_id in turn_order:
             print(f"Player {player_id+1}'s cards: ", end="")
             for card_id in range(len(hands[player_id])):
                 print(f"{get_card_string(hands[player_id][card_id])} ", end="")
@@ -70,7 +73,7 @@ for num_pot in range(num_pots_in_round):
     # create an empty list for players to add their cards to the plot
     pot = []
 
-    for player_id in range(num_players):
+    for player_id in turn_order:
 
         must_follow_suit = False
         # Before asking a player for a card pick check if the player needs to follow suit 
@@ -118,15 +121,15 @@ for num_pot in range(num_pots_in_round):
                 selection_id = valid_card_ids[np.random.randint(len(valid_card_ids))]
                 print("Did not follow suit! A random valid card has been selected")
         
+        # output the player card selection
+        if len(hands[player_id]) != 0:
+            print(f"Player {player_id+1} selected {get_card_string(hands[player_id][selection_id])}")
+
         # add card from the player#s hand to the pot
         pot.append(hands[player_id][selection_id])
         hands[player_id].pop(selection_id)
 
-        # output the player card selection
-        if len(hands[player_id]) != 0:
-            print(f"Player {player_id+1} selected {get_card_string(pot[player_id])}")
-
-    # return the carrds that are in the pot for the players to see
+    # return the cards that are in the pot for the players to see
     print(f"The cards in the pot are:", end=' ')
     for card_id in range(len(pot)):
             print(f"{get_card_string(pot[card_id])} ", end="")
@@ -135,4 +138,16 @@ for num_pot in range(num_pots_in_round):
     time.sleep(pause)
     
     # TODO: determine which player won and add that to their score
-    # TODO: add a turn order list
+
+    winning_card = pot[0] # by default the first card played wins
+    
+    # if card has same suit but higher value, first card is beat
+    # if card has hearts as suit and winning card does not, first card is beat
+    # if both cards have hearts as suit but card is higher value, first card is beat
+
+    # for card_id in len(range(pot)):
+    #     if pot[card_id][] 
+
+    # update the turn order
+    turn_order.insert(0,turn_order[-1])
+    turn_order.pop(-1)
