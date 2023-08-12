@@ -3,7 +3,7 @@ BLOB - the card game of prediction
 Command Line Interface Card Game
 """
 
-print("WELCOME TO BLOB - THE CARD GAME OF PREDICTION")
+print("WELCOME TO BLOB - THE CARD GAME OF PREDICTION\n")
 
 # import dependencies
 import numpy as np
@@ -15,7 +15,7 @@ time.sleep(pause)
 
 # player parameters
 num_players = 2
-num_pots_in_round = 3
+num_pots_in_round = 10
 
 # check if this is a valid combo
 if num_players * num_pots_in_round > 52:
@@ -84,7 +84,7 @@ for num_pot in range(num_pots_in_round):
                 print(f"Player {player_id+1}, you must follow suit therefore you may only select card number: ", end="")
                 for card_id in range(len(hands[player_id])):
                     if hands[player_id][card_id][0] == pot_suit:
-                        print(f"{card_id+1}", end="")
+                        print(f"{card_id+1}", end=" ")
                         valid_card_ids.append(card_id)
                 print()
         
@@ -98,12 +98,18 @@ for num_pot in range(num_pots_in_round):
         try:
             selection_id = int(selection_id) - 1  # account for 0 indexing with the -1
         except ValueError:
-            selection_id = np.random.randint(len(hands[player_id]))
+            if must_follow_suit:
+                selection_id = valid_card_ids[np.random.randint(len(valid_card_ids))]
+            else:
+                selection_id = np.random.randint(len(hands[player_id]))
             print("Invalid number entered, a random choice has been made instead")
 
         # check for integer values outside of the range
         if selection_id < 0 or selection_id >= len(hands[player_id]):
-            selection_id = np.random.randint(len(hands[player_id]))
+            if must_follow_suit:
+                selection_id = valid_card_ids[np.random.randint(len(valid_card_ids))]
+            else:
+                selection_id = np.random.randint(len(hands[player_id]))
             print("Invalid number entered, a random choice has been made instead")
         
         # check that the player has followed suit
