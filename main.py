@@ -50,10 +50,10 @@ def get_card_string(card_tuple):
 
 
 for player_id in turn_order:
-            print(f"Player {player_id+1}'s cards: ", end="")
-            for card_id in range(len(hands[player_id])):
-                print(f"{get_card_string(hands[player_id][card_id])} ", end="")
-            print() # jumps to a new line for the next player
+    print(f"Player {player_id+1}'s cards: ", end="")
+    for card_id in range(len(hands[player_id])):
+        print(f"{get_card_string(hands[player_id][card_id])} ", end="")
+    print() # jumps to a new line for the next player
 
 # TODO: ask players how many pots they think they'll win
 
@@ -108,7 +108,7 @@ for num_pot in range(num_pots_in_round):
             print("Invalid number entered, a random choice has been made instead")
 
         # check for integer values outside of the range
-        if selection_id < 0 or selection_id >= len(hands[player_id]):
+        if (selection_id < 0 or selection_id >= len(hands[player_id])):
             if must_follow_suit:
                 selection_id = valid_card_ids[np.random.randint(len(valid_card_ids))]
             else:
@@ -135,18 +135,32 @@ for num_pot in range(num_pots_in_round):
             print(f"{get_card_string(pot[card_id])} ", end="")
     print() # provides a new line
 
+     # by default the first card played wins    
+    winning_card = pot[0]
+    winning_card_id = 0
+    for card_id in range(len(pot)):
+        # if card has same suit but higher value, first card is beat
+        if ((pot[card_id][0] == winning_card[0]) and (pot[card_id][1] > winning_card[1])):
+            winning_card = pot[card_id]
+            winning_card_id = card_id
+            print("bing")
+        # if card has hearts as suit and winning card does not, first card is beat
+        if ((pot[card_id][0] == 1) and (winning_card[0] != 0)):
+            winning_card = pot[card_id]
+            winning_card_id = card_id
+            print("bong")
+        # if both cards have hearts as suit but card is higher value, first card is beat
+        if ((pot[card_id][0] == 1) and (winning_card[0] == 1) and (pot[card_id][1] > winning_card[1])):
+            winning_card = pot[card_id]
+            winning_card_id = card_id
+            print("clang")
+    
+    # card position in the pot is determined by the turn order
+    winning_player_id = turn_order[winning_card_id]
+    print(f"Player {winning_player_id+1} wins the pot")
+
+    # pause before the next pot is created
     time.sleep(pause)
-    
-    # TODO: determine which player won and add that to their score
-
-    winning_card = pot[0] # by default the first card played wins
-    
-    # if card has same suit but higher value, first card is beat
-    # if card has hearts as suit and winning card does not, first card is beat
-    # if both cards have hearts as suit but card is higher value, first card is beat
-
-    # for card_id in len(range(pot)):
-    #     if pot[card_id][] 
 
     # update the turn order
     turn_order.insert(0,turn_order[-1])
