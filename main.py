@@ -77,6 +77,7 @@ for num_pot in range(num_pots_in_round):
 
     print()
     print(f"There are {num_pots_in_round - num_pot} pots left to win")
+    print()
     
     # we skip for the first loop as they already know what cards they have
     if num_pot != 0:
@@ -85,7 +86,6 @@ for num_pot in range(num_pots_in_round):
             for card_id in range(len(hands[player_id])):
                 print(f"{get_card_string(hands[player_id][card_id])} ", end="")
             print() # jumps to a new line
-    print()
 
     # create an empty list for players to add their cards to the plot
     pot = []
@@ -148,6 +148,7 @@ for num_pot in range(num_pots_in_round):
         hands[player_id].pop(selection_id)
 
     # return the cards that are in the pot for the players to see
+    print()
     print(f"The cards in the pot are:", end=' ')
     for card_id in range(len(pot)):
             print(f"{get_card_string(pot[card_id])} ", end="")
@@ -183,3 +184,11 @@ for num_pot in range(num_pots_in_round):
     # update the turn order TODO: update so that the player to win the round goes first
     turn_order.append(turn_order[0])
     turn_order.pop(0)
+
+print()
+for player_id in [_ for _ in range(num_players)]:
+    print(f"Player {player_id+1} predicted they'd win {predictions[player_id]} and they won {pots_won[player_id]}")
+
+print()
+print("Thank you for playing Blob!")
+print()
