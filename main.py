@@ -15,7 +15,7 @@ time.sleep(pause)
 
 # player parameters
 num_players = 2
-num_pots_in_round = 3
+num_pots_in_round = 4  
 
 # check if this is a valid combo
 if num_players * num_pots_in_round > 52:
@@ -185,10 +185,12 @@ for num_pot in range(num_pots_in_round):
     turn_order.append(turn_order[0])
     turn_order.pop(0)
 
+time.sleep(pause)
 print()
 for player_id in [_ for _ in range(num_players)]:
     print(f"Player {player_id+1} predicted they'd win {predictions[player_id]} and they won {pots_won[player_id]}")
 
+time.sleep(pause)
 print()
 print("Thank you for playing Blob!")
 print()
