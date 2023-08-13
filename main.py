@@ -14,8 +14,8 @@ pause = 2 # time to pause between steps in seconds
 time.sleep(pause)
 
 # player parameters
-num_players = 2
-num_pots_in_round = 3
+num_players = 4
+num_pots_in_round = 5
 
 # check if this is a valid combo
 if num_players * num_pots_in_round > 52:
@@ -78,7 +78,7 @@ for num_pot in range(num_pots_in_round):
         must_follow_suit = False
         # Before asking a player for a card pick check if the player needs to follow suit 
         # (players must follow suit if they have a card in their hand matching the suit of the first card added to the pot)
-        if len(pot) != 0: # check if there are cards already in the pot
+        if len(hands[0]) > 1: # check if there's more than 1 card left in the players' hands
             player_suits = [x[0] for x in hands[player_id]] # list of suits in the player's hand
             pot_suit = pot[0][0] # suit set by the first card in the pot
             if pot_suit in player_suits:
@@ -145,7 +145,7 @@ for num_pot in range(num_pots_in_round):
             winning_card_id = card_id
             print("bing")
         # if card has hearts as suit and winning card does not, first card is beat
-        if ((pot[card_id][0] == 1) and (winning_card[0] != 0)):
+        if ((pot[card_id][0] == 1) and (winning_card[0] != 1)):
             winning_card = pot[card_id]
             winning_card_id = card_id
             print("bong")
