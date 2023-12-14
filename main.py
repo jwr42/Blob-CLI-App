@@ -3,7 +3,7 @@ BLOB - the card game of prediction
 Command Line Interface Card Game
 """
 
-print("WELCOME TO BLOB - THE CARD GAME OF PREDICTION\n")
+print("BLOB - THE CARD GAME OF PREDICTION\n")
 
 # import dependencies
 import numpy as np
@@ -14,8 +14,8 @@ pause = 2 # time to pause between steps in seconds
 time.sleep(pause)
 
 # player parameters
-num_players = 2
-num_pots_in_round = 4  
+num_players = 3
+num_pots_in_round = 5  
 
 # check if this is a valid combo
 if num_players * num_pots_in_round > 52:
