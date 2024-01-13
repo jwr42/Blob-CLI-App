@@ -14,7 +14,7 @@ pause = 2 # time to pause between steps in seconds
 time.sleep(pause)
 
 # player parameters
-num_players = 3
+num_players = 2
 num_pots_in_round = 5  
 
 # check if this is a valid combo
