@@ -1,5 +1,5 @@
 # Blob CLI App
-A command line interface application of the popular card game Blob (also known as Oh Hell or Contract Whist)
+A command line interface application of the popular card game Blob (also known as Oh Hell or Contract Whist) https://en.wikipedia.org/wiki/Oh_hell
 
 # Features
 - Iterative and conditional control flow statements to manage the game
