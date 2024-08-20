@@ -30,6 +30,16 @@ hands = [] # for each player a list is added of the cards in their hands
 
 #place x number of random cards from the deck into each player's hand
 def get_hand(deck, num_pots_in_round):
+    """
+    Generate a hand of cards for a player in a game.
+
+    Args:
+        deck (list): A list of cards in the deck.
+        num_pots_in_round (int): The number of pots in the round.
+
+    Returns:
+        list: A list of cards representing the player's hand.
+    """
     hand = []
     for i in range(num_pots_in_round):
         id = np.random.randint(len(deck))
