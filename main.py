@@ -15,7 +15,7 @@ time.sleep(pause)
 
 # player parameters
 num_players = 2
-num_pots_in_round = 10  
+num_pots_in_round = 5
 
 # check if this is a valid combo
 if num_players * num_pots_in_round > 52:
